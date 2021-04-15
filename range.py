@@ -56,8 +56,12 @@ def random_below(exclusive_upper_bound):
         if r < ( exclusive_upper_bound):
             return r
 
-mynumber = int(input("Max: "))
+top_number = int(input("Inclusive upper bound: "))
+howmany = int(input("How many numbers to be generated: "))
+print ("Generating", howmany, "numbers from 1 to", top_number, "(inclusive range)")
 
-print ("\nRandom number betwen 1 and", mynumber, ": ", random_below(mynumber)+1)
+for n in range(howmany):
+
+    print (n+1,": Random number betwen 1 and", top_number, ": ", random_below(top_number)+1)
 
 
