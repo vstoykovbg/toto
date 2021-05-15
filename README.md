@@ -12,7 +12,11 @@ The script `6_from_49.py` is getting randomness only from qrng.anu.edu.au.
 
 The file `qrng_mixer.py` contains the library used by `range_mixed.py` and `6_from_49_mixed.py`.
 
-Instead of microphone you can connect to the microphone input a noise generator like this:
+To test the presence of noise on the microphone input you can use `xoscope` (preferably compiled from source, the version from Ubuntu does not work for me). Also, you can check the presence of noise with the command `arecord | aplay`.
+
+The scripts are intended to be used on Linux. But the simple versions (`range.py`, `6_from_49.py`) should work under Windows (I have not tested them on Windows).
+
+Instead of a microphone, you can connect to the microphone input a noise generator like this:
 
 [Noise generator without the need for additional power supply](https://rootvideochannel.blogspot.com/2021/05/noise-generator-without-need-for.html)
 
