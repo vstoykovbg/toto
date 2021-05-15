@@ -8,5 +8,6 @@ The script `range.py` is getting randomness only from qrng.anu.edu.au (without m
 
 The script `6_from_49_mixed.py` is like `range_mixed.py` (but is with predefined parameters).
 
-The scripot `6_from_49.py` is getting randomness only from qrng.anu.edu.au.
+The script `6_from_49.py` is getting randomness only from qrng.anu.edu.au.
 
+The file `qrng_mixer.py` contains the library used by `range_mixed.py` and `6_from_49_mixed.py`.

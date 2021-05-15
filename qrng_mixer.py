@@ -15,6 +15,8 @@ import binascii
 global_accumulator = list()
 global_user_entropy = bytes()
 
+how_many_chunks = 5
+
 assert isinstance(global_accumulator, list)
 
 
@@ -54,9 +56,10 @@ def refill_global_accumulator():
     assert isinstance(hash_sound, bytes)
     assert len(hash_sound) == 64
 
-    my_range=1
-    for counter in range(my_range):
-        print("Reading chunk", counter + 1, "from", my_range)
+    global how_many_chunks
+
+    for counter in range(how_many_chunks):
+        print("Reading chunk", counter + 1, "from", how_many_chunks)
         random_sound_chunk = get_random_sound()
 
         if len(random_sound_chunk) < 100000:
@@ -200,6 +203,15 @@ def random_below(exclusive_upper_bound):
 
 
 def first_refill():
+
+    global how_many_chunks
+
+    print("How many chunks of randomness from the microphone to get?")
+
+    how_many_chunks = int(input("One chunk is 5 seconds. Your input: "))
+    assert how_many_chunks > 0
+
+
     print("Please boost the microphone input volume and connect a microphone")
     print("or other noise source.")
     print("(Before hitting Enter you may write a random string here.)")
