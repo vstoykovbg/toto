@@ -1,4 +1,4 @@
-# Quantum Randomness
+# Quantum Randomness Mixers
 
 To get integers in range (between 1 and your desired number) use `range_mixed.py`.
 
