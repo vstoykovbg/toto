@@ -56,17 +56,15 @@ def random_below(exclusive_upper_bound):
         if r < ( exclusive_upper_bound):
             return r
 
-# This code was producing duplicate numbers, so I removed it
-#for n in range(6):
-#    print (random_below(49)+1)
-
-# using set to avoid duplicate numbers
-numbers = set()
-how_many = 6
-inclusive_top = 49
+inclusive_top = int(input("Inclusive upper bound: "))
+how_many = int(input("How many numbers to be generated: "))
+print ("Generating", how_many, "numbers from 1 to", inclusive_top, "(inclusive range)")
 
 # to avoid infinite loops
 assert how_many < inclusive_top
+
+# using set to avoid duplicate numbers
+numbers = set()
 
 while len(numbers) < how_many:
     numbers.add(random_below(inclusive_top)+1)

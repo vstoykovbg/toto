@@ -6,11 +6,15 @@ The script will get random data from a quantum random number generator (qrng.anu
 
 The script `range.py` is getting randomness only from qrng.anu.edu.au (without mixing it with local sources of randomness).
 
-The script `6_from_49_mixed.py` is like `range_mixed.py` (but is with predefined parameters).
+The script `6_from_49_mixed.py` is like `range_mixed.py` (but is with predefined parameters and produce unique numbers).
 
 The script `6_from_49.py` is getting randomness only from qrng.anu.edu.au.
 
 The file `qrng_mixer.py` contains the library used by `range_mixed.py` and `6_from_49_mixed.py`.
+
+The script `range_mixed_unique.py` is like `range_mixed.py`, but produce unique numbers (useflul for lotteries).
+
+The script `range_unique.py` is like `range.py`, but produce unique numbers (useflul for lotteries).
 
 To test the presence of noise on the microphone input you can use `xoscope` (preferably compiled from source, the version from Ubuntu does not work for me). Also, you can check the presence of noise with the command `arecord | aplay`.
 
