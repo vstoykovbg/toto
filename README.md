@@ -1,6 +1,6 @@
 # Quantum Randomness Mixers
 
-To get integers in range (between 1 and your desired number) use `range_mixed.py`.
+To get integers in range (between 1 and your desired number) use `range_mixed.py` (or `range_mixed_unique.py` if you need the numbers to be unique - useful for lotteries).
 
 The script will get random data from a quantum random number generator (qrng.anu.edu.au) and will mix it with local sources (your computer's microphone input, haveged, /dev/random).
 
