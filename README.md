@@ -8,17 +8,15 @@ The script `range.py` is getting randomness only from qrng.anu.edu.au (without m
 
 The script `6_from_49_mixed.py` is like `range_mixed.py` (but is with predefined parameters and produce unique numbers).
 
-The script `6_from_49.py` is getting randomness only from qrng.anu.edu.au.
+The script `6_from_49.py` is getting randomness only from qrng.anu.edu.au and is producing 6 uniqe numbers.
 
-The file `qrng_mixer.py` contains the library used by `range_mixed.py` and `6_from_49_mixed.py`.
+The file `qrng_mixer.py` contains the library used by `*_mixed*.py` scripts.
 
-The script `range_mixed_unique.py` is like `range_mixed.py`, but produce unique numbers (useflul for lotteries).
-
-The script `range_unique.py` is like `range.py`, but produce unique numbers (useflul for lotteries).
+Scripts with `_unique.py` prefix are producing unique numbers (useflul for lotteries).
 
 To test the presence of noise on the microphone input you can use `xoscope` (preferably compiled from source, the version from Ubuntu does not work for me). Also, you can check the presence of noise with the command `arecord | aplay`.
 
-The scripts are intended to be used on Linux. But the simple versions (`range.py`, `6_from_49.py`) should work under Windows (I have not tested them on Windows).
+These scripts are intended to be used on Linux. But the simple versions (`range.py`, `6_from_49.py`) should work under Windows (I have not tested them on Windows).
 
 Instead of a microphone, you can connect to the microphone input a noise generator like this:
 
