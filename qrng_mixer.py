@@ -105,10 +105,7 @@ def refill_global_accumulator():
         assert isinstance(hash_sound, bytes)
         assert len(hash_sound) == 64
 
-        qrng_rez_1=fetch_qrng(64)
-        qrng_rez_2=fetch_qrng(1024)
-
-        hash_sound = sha512(random_sound_chunk + hash_sound + global_user_entropy + qrng_rez_1 + qrng_rez_2).digest()
+        hash_sound = sha512(random_sound_chunk + hash_sound + global_user_entropy).digest()
 
         assert isinstance(hash_sound, bytes)
         assert len(hash_sound) == 64
@@ -117,6 +114,14 @@ def refill_global_accumulator():
 
         assert isinstance(hash_sound, bytes)
         assert len(hash_sound) == 64
+
+    qrng_rez_1=fetch_qrng(64)
+    qrng_rez_2=fetch_qrng(1024)
+
+    hash_sound = sha512(get_random_bytes(256) + hash_sound + global_user_entropy + qrng_rez_1 + qrng_rez_2).digest()
+
+    assert isinstance(hash_sound, bytes)
+    assert len(hash_sound) == 64
 
     this_hash = b''
 
