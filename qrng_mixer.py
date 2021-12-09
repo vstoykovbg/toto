@@ -40,6 +40,43 @@ def print_tolerant_error(msg, detail):
     print("\n\n" + msg, detail)
     print("However, this script is fault tolerant, so we continue.\n")
 
+def fetch_qrng(datalen=64):
+    print ("Fetching data from qrng.anu.edu.au....")
+    try:
+        url = "https://qrng.anu.edu.au/API/jsonI.php?length=1&type=hex16&size=" + str(datalen)
+
+        req = urllib.request.Request(url)
+        response = urllib.request.urlopen(req)
+        data = response.read()
+        values = json.loads(data)   
+
+
+        for hexdata in values["data"]:
+
+            qrng_data = b''
+
+            try:
+                qrng_data = binascii.a2b_hex(hexdata)
+            except ValueError as detail:
+                print("  It does not look like a hexadecimal.", detail)
+            else:
+                print("We got data from qrng.anu.edu.au:", binascii.b2a_base64(qrng_data, newline=False).decode("utf-8"))
+                if len(qrng_data) == datalen:
+                    print("Length looks good.")
+                else:
+                    print("Length is not", datalen, "!")
+
+            assert isinstance(qrng_data, bytes)
+            assert len(qrng_data) == datalen
+
+            return qrng_data
+
+
+    except Exception as detail:
+        print_tolerant_error("⚠ Trying to get data from qrng.anu.edu.au failed.", detail)
+        return b''
+
+
 def print_global_accumulator():
     print ("global accumulator:", binascii.b2a_base64(bytes(global_accumulator), newline=False).decode("utf-8"))
 
@@ -68,7 +105,10 @@ def refill_global_accumulator():
         assert isinstance(hash_sound, bytes)
         assert len(hash_sound) == 64
 
-        hash_sound = sha512(random_sound_chunk + hash_sound + global_user_entropy).digest()
+        qrng_rez_1=fetch_qrng(64)
+        qrng_rez_2=fetch_qrng(1024)
+
+        hash_sound = sha512(random_sound_chunk + hash_sound + global_user_entropy + qrng_rez_1 + qrng_rez_2).digest()
 
         assert isinstance(hash_sound, bytes)
         assert len(hash_sound) == 64
@@ -90,43 +130,10 @@ def refill_global_accumulator():
     assert isinstance(this_hash, bytes)
     assert len(this_hash) == 64
 
-    print ("Fetching data from qrng.anu.edu.au....")
-    try:
-        url = "https://qrng.anu.edu.au/API/jsonI.php?length=1&type=hex16&size=64"
+    qrng_rez=fetch_qrng(64)
 
-        req = urllib.request.Request(url)
-        response = urllib.request.urlopen(req)
-        data = response.read()
-        values = json.loads(data)   
-
-
-        for hexdata in values["data"]:
-
-            qrng_data = b''
-
-            try:
-                qrng_data = binascii.a2b_hex(hexdata)
-            except ValueError as detail:
-                print("  It does not look like a hexadecimal.", detail)
-            else:
-                print("We got data from qrng.anu.edu.au:", binascii.b2a_base64(qrng_data, newline=False).decode("utf-8"))
-                if len(qrng_data) == 64:
-                    print("Length looks good.")
-                else:
-                    print("Length is not 64!")
-
-            assert isinstance(qrng_data, bytes)
-            assert len(qrng_data) == 64
-
-            this_hash = strxor(this_hash, qrng_data )
-
-            assert isinstance(this_hash, bytes)
-            assert len(this_hash) == 64
-
-
-    except Exception as detail:
-        print_tolerant_error("⚠ Trying to get data from qrng.anu.edu.au failed.", detail)
-
+    if len(qrng_rez) == 64:
+        this_hash = strxor(this_hash, qrng_rez)
     
     assert isinstance(this_hash, bytes)
     assert len(this_hash) == 64
